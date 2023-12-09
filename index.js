@@ -43,6 +43,18 @@ app.all('*', (req, res) => {
     delete headersClean['accept-language'];
     delete headersClean['if-none-match'];
     delete headersClean['postman-token'];
+    delete headersClean['cdn-loop'];
+    delete headersClean['cf-connecting-ip'];
+    delete headersClean['cf-ew-via'];
+    delete headersClean['cf-ray'];
+    delete headersClean['cf-visitor'];
+    delete headersClean['referer'];
+    delete headersClean['render-proxy-ttl'];
+    delete headersClean['rndr-id'];
+    delete headersClean['sec-ch-ua-mobile'];
+    delete headersClean['x-request-start'];
+    delete headersClean['x-forwarded-proto'];
+    delete headersClean['x-forwarded-for'];
 
     if (headersClean) console.log('[HEADERS]::', JSON.stringify(headersClean, null, 2));
     if (req.query) console.log('[QUERY]::', JSON.stringify(req.query, null, 2));
