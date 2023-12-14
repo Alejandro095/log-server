@@ -12,24 +12,24 @@ app.use(express.json())
 app.use(nocache());
 app.use(cors({ origin: "*" }));
 
-app.use(morgan(function (tokens, req, res) {
-    return [
-        `\n<<--`,
-        `SOLICITUD NUM. ${NUMERO_DE_SOLICITUD++}`, '-',
-        tokens.date(req, res, 'clf'), '-',
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res), '-',
-        tokens.res(req, res, 'content-length'), '-',
-        tokens['response-time'](req, res), 'ms',
-        `-->>`,
-    ].join(' ')
-  }, {
-    immediate: true
-}));
+// app.use(morgan(function (tokens, req, res) {
+//     return [
+//         `\n<<--`,
+//         `SOLICITUD NUM. ${NUMERO_DE_SOLICITUD++}`, '-',
+//         tokens.date(req, res, 'clf'), '-',
+//         tokens.method(req, res),
+//         tokens.url(req, res),
+//         tokens.status(req, res), '-',
+//         tokens.res(req, res, 'content-length'), '-',
+//         tokens['response-time'](req, res), 'ms',
+//         `-->>`,
+//     ].join(' ')
+//   }, {
+//     immediate: true
+// }));
 
 app.all('*', (req, res) => {
-    let headersClean = Object.assign({}, req.headers);
+    let headersClean = Object.assign({}, );
     delete headersClean['connection'];
     delete headersClean['sec-ch-ua'];
     delete headersClean['cache-control'];
@@ -56,10 +56,11 @@ app.all('*', (req, res) => {
     delete headersClean['x-forwarded-proto'];
     delete headersClean['x-forwarded-for'];
 
-    if (headersClean) console.log('[HEADERS]::', JSON.stringify(headersClean, null, 2));
-    if (req.query) console.log('[QUERY]::', JSON.stringify(req.query, null, 2));
-    if (req.params) console.log('[PARAMS]::', JSON.stringify(req.params, null, 2));
-    if (req.body) console.log('[BODY]::', JSON.stringify(req.body, null, 2));
+    // if (headersClean) console.log('[HEADERS]::', JSON.stringify(headersClean, null, 2));
+    // if (req.query) console.log('[QUERY]::', JSON.stringify(req.query, null, 2));
+    // if (req.params) console.log('[PARAMS]::', JSON.stringify(req.params, null, 2));
+    // if (req.body) console.log('[BODY]::', JSON.stringify(req.body, null, 2));
+    console.log(`[${++NUMERO_DE_SOLICITUD}] ${new Date().toISOString()} - LAT: ${req.headers["x-latitude"]}  LONG: ${req.headers["x-longitude"]}}`);
     console.log('\n');
 
     res.contentType('application/json');
